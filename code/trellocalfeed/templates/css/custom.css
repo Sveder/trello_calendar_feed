@@ -1,0 +1,12 @@
+#authorize
+{
+    height: 50px;
+    width: 200px;  
+    font-size: x-large;
+
+    color: white;
+    background-color: blue;
+    border: solid 2px green;
+    border-radius: 2px;
+    box-shadow: 2px 2px yellow;
+}
