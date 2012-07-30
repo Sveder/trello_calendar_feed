@@ -7,19 +7,9 @@ import logic
 
 @dajaxice_register
 def process_cards(request, cards_json, token, username):
-    print cards_json
-    print token
-    print username
-    
-    
-    
     try:
         feed = logic.get_or_create_feed_in_db(token, username)
-        print feed, feed.user_name, feed.user_token, feed.url, feed.salt
-        cards = json.loads(cards_json)
-        calendar = logic.create_calendar_from_cards(cards)
+        return simplejson.dumps({'url' : feed.url})
     except:
         import traceback
-        traceback.print_exc()
-    
-    return simplejson.dumps({'message':'Hello World'})
+        return simplejson.dumps({'url' : "", "error" : traceback.format_exc()})

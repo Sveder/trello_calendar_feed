@@ -15,6 +15,7 @@ dajaxice_autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'theapp.views.home', name='home'),
+    url(r'^feed/(.+)$', 'theapp.views.feed', name='feed'),
     
     
     (r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),

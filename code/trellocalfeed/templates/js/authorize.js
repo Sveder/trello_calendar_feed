@@ -26,8 +26,12 @@ function filter_cards(boards)
                 if (card.due)
                 {
                     //Check that the due time is in the definite future:
-                    
-                    due_date_cards.push(card);
+                    var due_date = new Date(card.due);
+                    var now = new Date();
+                    if (due_date > now)
+                    {
+                        due_date_cards.push(card);
+                    }
                 }
             });
         });
@@ -48,7 +52,6 @@ function after_authorize(){
     
     //Get username:
     Trello.get("members/me", function(me, ix){
-            console.log(me);
             username = me.username;
         });
     
@@ -58,11 +61,13 @@ function after_authorize(){
 
 function send_cards(){
     var data = JSON.stringify(due_date_cards);
-    console.log(Trello);
     Dajaxice.theapp.process_cards(after_send, {'cards_json': data, "token" : Trello.token(), "username" : username})
 }
 
-function after_send(){
-    console.log("Moooooooooo");
+function after_send(data){
     due_date_cards = new Array();
+    
+    console.log("After send");
+    console.log(data.url);
+    window.location = "/feed/" + data.url;
 }
