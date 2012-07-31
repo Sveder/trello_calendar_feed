@@ -17,6 +17,6 @@ def feed(request, url):
     calendar = logic.create_calendar_from_feed(feed_model)
     ical_feed = calendar.to_ical()
     print ical_feed
-    ical_feed = ical_feed.replace("\r\n", "<br>")
     
-    return HttpResponse(ical_feed)
+    
+    return HttpResponse(ical_feed, content_type="text/calendar")
