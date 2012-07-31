@@ -49,16 +49,14 @@ def create_calendar_from_feed(feed):
     
     card_list = []
     for board in boards:
-        lists = board.open_lists()
-        for list in lists:
-            cards = list.list_cards()
-            for card in cards:
-                if card.due != None:
-                    card_start_time = card.due
-                    start_time = datetime.datetime.strptime(card_start_time, "%Y-%m-%dT%H:%M:%S.000Z")
-                    if start_time > datetime.datetime.now():
-                        card_list.append(card)
-                        
+        cards = board.list_cards("due")
+        for card in cards:
+            if card.due != None:
+                card_start_time = card.due
+                start_time = datetime.datetime.strptime(card_start_time, "%Y-%m-%dT%H:%M:%S.000Z")
+                if start_time > datetime.datetime.now():
+                    card_list.append(card)
+                    
     return create_calendar_from_cards(card_list)
     
 
