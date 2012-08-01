@@ -35,8 +35,6 @@ function after_send(data){
         change_status("error generating feed: " + data.error);
         return;        
     }
-    console.log(data.ical);
-    console.log(data.url);
     show_instructions(data.url);
 }
 
@@ -53,16 +51,12 @@ function stop_status()
 
 function show_instructions(url)
 {
-    console.log("!");
     var actual_url = "http://fun.sveder.com/feed/" + url;
     
     $("#feed_url").html("<input width=300 value='" + actual_url + "' />");
     $("#feed_url").click(function(){
-            console.log("!@#!@#!@");
             $("#feed_url>input").trigger('select');
         });
     
-    console.log("@");
     $("div#instructions").fadeIn()
-    console.log("#");
 }

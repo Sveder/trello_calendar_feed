@@ -14,6 +14,12 @@ framework.
 
 """
 import os
+import sys
+
+path = '/srv/www/trellocalfeed/'
+if path not in sys.path:
+    sys.path.append(path)
+
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "trellocalfeed.settings")
 

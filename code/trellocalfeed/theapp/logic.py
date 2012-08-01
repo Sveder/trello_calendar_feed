@@ -49,7 +49,7 @@ def create_calendar_from_feed(feed):
     
     card_list = []
     for board in boards:
-        cards = board.list_cards("due")
+        cards = board.list_cards("due,url")
         for card in cards:
             if card.due != None:
                 card_start_time = card.due
@@ -91,9 +91,8 @@ def _create_event_from_card(card):
     #hackity hack to maybe not add new line to summary:
     summary = card.name[:50] + "..."
     event.add("summary", "Trello Item: %s" % summary)
-    print "---"
-    print summary
-    print "---"
+    event.add('DESCRIPTION', card.url)
+    
     event.add('dtstart', start_time)
     event.add('dtend', end_time)
     event.add('dtstamp', start_time)
