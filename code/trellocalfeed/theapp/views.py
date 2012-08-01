@@ -18,5 +18,4 @@ def feed(request, url):
     ical_feed = calendar.to_ical()
     print ical_feed
     
-    
     return HttpResponse(ical_feed, content_type="text/calendar")

@@ -14,13 +14,13 @@ dajaxice_autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'theapp.views.home', name='home'),
+    url(r'^trello$', 'theapp.views.home', name='home'),
     url(r'^feed/(.+)$', 'theapp.views.feed', name='feed'),
     
     
     (r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 
-    
+
     
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
