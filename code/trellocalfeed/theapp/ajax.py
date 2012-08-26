@@ -1,4 +1,5 @@
 import json
+import traceback
 
 from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
@@ -6,12 +7,16 @@ from dajaxice.decorators import dajaxice_register
 import logic
 
 @dajaxice_register
-def process_cards(request, token, username):
+def process_cards(request, token, username, userid):
     try:
-        feed = logic.get_or_create_feed_in_db(token, username)
-        calendar = logic.create_calendar_from_feed(feed)
-        ical_feed = calendar.to_ical()
-        return simplejson.dumps({'ical' : ical_feed, "url" : feed.url})
+        user = logic.get_or_create_user(token, username, userid)
+        return simplejson.dumps({'user_url' : user.url,})
     except:
-        import traceback
-        return simplejson.dumps({'ical' : "", "error" : traceback.format_exc()})
+        return simplejson.dumps({'user_url' : "", "error" : traceback.format_exc()})
+    
+    
+    
+    
+    
+    
+    

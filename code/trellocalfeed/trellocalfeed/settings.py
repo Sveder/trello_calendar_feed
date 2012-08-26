@@ -83,6 +83,7 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '0abec+41srx8qn_upmjw&amp;gxuq@ysykwz$#mggj8x+fqyfshu^k'
 
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -96,6 +97,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    
+
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -131,6 +134,7 @@ INSTALLED_APPS = (
     
     'debug_toolbar',    
     'dajaxice',
+    'south',
     
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',

@@ -15,6 +15,10 @@ SALT_ALPHABET = string.ascii_letters + string.digits + "!@#$%^&*()_+{}[]"
 SALT_LENGTH = 16
 
 def _create_salt_and_url(user_name):
+    """
+    Create a random salt and url hash from the given username. This is basically giving us some random long
+    string - security 
+    """
     salt = "".join([random.choice(SALT_ALPHABET) for i in xrange(SALT_LENGTH)])
     url = hashlib.sha512(user_name + salt).hexdigest()
     return salt, url
@@ -38,7 +42,22 @@ def get_or_create_feed_in_db(token, user_name):
     feed_model.save()
     
     return feed_model
-            
+
+def get_or_create_user(token, username, userid):
+    """
+    Either get the user model that corresponds to the given user id or create a new user model.
+    """
+    now = time.time()
+    try:
+        user_model = models.FeedUser.objects.get(trello_member_id=userid)
+    except models.FeedUser.DoesNotExist:
+        salt, url = _create_salt_and_url(username)
+        user_model = models.FeedUser(user_name=username, user_token=token, url=url, trello_member_id=userid, created=now)
+    
+    user_model.last_access = now
+    user_model.save()
+    
+    return user_model
     
 def create_calendar_from_feed(feed):
     """
@@ -59,6 +78,20 @@ def create_calendar_from_feed(feed):
                     
     return create_calendar_from_cards(card_list)
     
+def get_all_board_names(token):
+    """
+    Get a list of all board names of the user whose token is given.
+    """
+    client = trello.client.Trello(API_KEY, token)
+    boards = client.list_boards()
+    board_names = []
+    for board in boards:
+        board.fetch()
+        board_names.append(board.name)
+    
+    print board_names
+    return board_names
+
 
 
 def create_calendar_from_cards(card_list):
@@ -99,5 +132,4 @@ def _create_event_from_card(card):
     event["uid"] = "%strello_to_ical" % card.id
     
     return event
-    
     
