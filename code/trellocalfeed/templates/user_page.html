@@ -16,6 +16,9 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 	
+	<script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+	<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+	
 	<!--<link rel="stylesheet/less" href="less/style.less">
 	<script src="js/libs/less-1.3.0.min.js"></script>-->
 	
@@ -28,15 +31,10 @@
 	 -->
 
 	<link rel="stylesheet" href="/css/custom.css">
-	  
-	<script src="/js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
-	
+	<script src="/js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>	
 	<script src="https://api.trello.com/1/client.js?key=9cf5a88e6a3a9897d59e55bfc327b5d5"></script>
-	
 	{% dajaxice_js_import %}
-
 	<script src="/js/script.js"></script>
-	
 </head>
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -97,6 +95,22 @@
 	</div>
 	<div><button onclick="create_feed();">Create feed</button></div>
 	
+	<a style="display:none" id="new_feed_fancy" href="#new-feed"></a>
+	<div style="display:none">
+	  <div id="new-feed">
+	    
+	    <div>A calendar feed was created at the following URLs:</div>
+	    <span id="feed_url"></span> (click to auto-select and then copy)
+	    <br>
+	    <span id="feed_summary"></span>
+	    <br>
+	    <br>
+	    To add it to Google Calendar follow <a href="http://support.google.com/calendar/bin/answer.py?hl=en&answer=37100">these instructions.</a><br>
+	    To add it to Outlook follow <a href="http://office.microsoft.com/en-us/outlook-help/view-and-subscribe-to-internet-calendars-HA010167325.aspx">these instructions.</a><br>
+	    For other calendar programs <a href="http://mcb.berkeley.edu/academic-programs/seminars/ical-feed-instructions/">try this page</a> or search Google.
+	    
+	  </div>
+	</div>
 	
       </div>
       <br>
@@ -107,12 +121,26 @@
       
 
       <br>
-      <div class="all_feeds">
+      <div class="feeds_section">
 	<h3>Manage your feeds:</h3>
-	{% for feed in feeds %}
-	  
-	{% endfor %}
 	
+	<div class="feeds_list">
+	  <div class="single_feed">
+	    <div>Url</div>
+	    <div>Summary</div>
+	    <div>Delete Feed</div>
+	  </div>
+	    
+	  {% for feed in feeds %}
+	    {% if feed.is_valid %}
+	      <div class="single_feed">
+		<div><a href={{ feed.relative_url}}>{{ feed.url|slice:":10" }}...</a></div>
+		<div>{{ feed.summary }}</div>
+		<div><button onclick="delete_feed({{ feed.id }});">Delete Feed</button></div>
+	      </div>
+	    {% endif %}
+	  {% endfor %}
+	</div>
       </div>
       
       

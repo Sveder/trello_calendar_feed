@@ -29,3 +29,34 @@
     display: table-cell;
     min-width: 150px;
 }
+
+.feeds_list
+{
+    display: table;
+    margin: 3px;
+}
+
+.feeds_list > div
+{
+    display: table-row;
+}
+
+.feeds_list > div > div
+{
+    display: table-cell;
+}
+
+.feeds_list > div > div:first-child
+{
+    display: table-caption;
+}
+
+.feeds_list > div:first-child
+{
+    font-weight: bold;
+}
+
+.feeds_list > div:nth-child(even)
+{
+    background-color: #dddddd;
+}

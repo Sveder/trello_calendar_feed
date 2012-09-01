@@ -81,7 +81,7 @@ def create_calendar_from_feed(feed):
                 if start_time > datetime.datetime.now():
                     card_list.append(card)
                     
-    return create_calendar_from_cards(card_list)
+    return create_calendar_from_cards(card_list, feed)
     
 
 def get_all_board_names(token):
@@ -116,12 +116,17 @@ def create_feed(user, is_only_assigned, all_day_meeting, meeting_length, boards)
     
     feed_model.save()
     
+    client = trello.client.Trello(API_KEY, user.user_token)
     for board in boards:
         board_id = board.replace("checkbox_board_", "")
         try:
-            board_model = models.Board.objects.get(board_id=board_id)
+            board_model = models.Board.objects.get(board_id=board_id, )
         except models.Board.DoesNotExist:
-            board_model = models.Board(board_id=board_id)
+            board_from_trello = trello.client.Board(client, board_id)
+            board_from_trello.fetch()
+            board_name = board_from_trello.name
+            
+            board_model = models.Board(board_id=board_id, name=board_name)
             board_model.save()
             
         feed_model.boards.add(board_model)
@@ -131,7 +136,7 @@ def create_feed(user, is_only_assigned, all_day_meeting, meeting_length, boards)
 
 
 
-def create_calendar_from_cards(card_list):
+def create_calendar_from_cards(card_list, feed):
     """
     Create an ical object from the card list given and return it/
     """
@@ -140,7 +145,7 @@ def create_calendar_from_cards(card_list):
     
     #Create event for each card:
     for card in card_list:
-        event = _create_event_from_card(card)
+        event = _create_event_from_card(card, feed)
         calendar.add_component(event)
     
     return calendar
@@ -151,10 +156,13 @@ def _create_calendar():
     cal.add("version", "2.0")
     return cal
 
-def _create_event_from_card(card):
+def _create_event_from_card(card, feed):
     card_start_time = card.due
     start_time = datetime.datetime.strptime(card_start_time, "%Y-%m-%dT%H:%M:%S.000Z")
-    end_time = start_time + datetime.timedelta(minutes=15)
+    if feed.is_all_day_event:
+        end_time = start_time + datetime.timedelta(days=1)
+    else:
+        end_time = start_time + datetime.timedelta(minutes=feed.event_length)
     
     event = icalendar.Event()
     

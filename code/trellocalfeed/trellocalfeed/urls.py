@@ -43,5 +43,8 @@ urlpatterns = patterns('',
     (r'/?less/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': path.join(TEMPLATE_DIRS, "less")}),
     
+    (r'/?fancybox/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': path.join(TEMPLATE_DIRS, "fancybox")}),
+    
     
 )
