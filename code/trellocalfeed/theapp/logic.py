@@ -63,11 +63,16 @@ def create_calendar_from_feed(feed):
     """
     Create an ical object from the cards from the feed given.
     """
-    client = trello.client.Trello(API_KEY, feed.user_token)
+    client = trello.client.Trello(API_KEY, feed.feed_user.user_token)
     boards = client.list_boards()
+    board_ids = feed.boards.all().values_list("board_id")
+    board_ids = [i[0] for i in board_ids]
     
     card_list = []
     for board in boards:
+        if board.id not in board_ids:
+            continue
+        
         cards = board.list_cards("due,url")
         for card in cards:
             if card.due != None:
@@ -78,19 +83,51 @@ def create_calendar_from_feed(feed):
                     
     return create_calendar_from_cards(card_list)
     
+
 def get_all_board_names(token):
     """
     Get a list of all board names of the user whose token is given.
     """
-    client = trello.client.Trello(API_KEY, token)
-    boards = client.list_boards()
+    boards = get_all_boards(token)
     board_names = []
     for board in boards:
-        board.fetch()
         board_names.append(board.name)
     
-    print board_names
     return board_names
+    
+
+def get_all_boards(token):
+    client = trello.client.Trello(API_KEY, token)
+    boards = client.list_boards()
+    
+    for board in boards:
+        board.fetch()
+    
+    return boards
+
+
+def create_feed(user, is_only_assigned, all_day_meeting, meeting_length, boards):
+    salt, url = _create_salt_and_url(user.user_name)
+
+    now = time.time()
+    feed_model = models.Feed(feed_user=user, salt=salt, url=url, only_assigned=is_only_assigned,
+                             is_all_day_event=all_day_meeting, event_length=meeting_length,
+                             last_access=now, created=now)
+    
+    feed_model.save()
+    
+    for board in boards:
+        board_id = board.replace("checkbox_board_", "")
+        try:
+            board_model = models.Board.objects.get(board_id=board_id)
+        except models.Board.DoesNotExist:
+            board_model = models.Board(board_id=board_id)
+            board_model.save()
+            
+        feed_model.boards.add(board_model)
+    
+    return feed_model
+    
 
 
 
@@ -111,7 +148,7 @@ def create_calendar_from_cards(card_list):
 def _create_calendar():
     cal = icalendar.Calendar()
     cal.add("prodid", "-//sveder.com/trello_to_ical//EN")
-    cal.add("version", "0.1")
+    cal.add("version", "2.0")
     return cal
 
 def _create_event_from_card(card):

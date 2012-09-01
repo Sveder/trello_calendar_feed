@@ -5,7 +5,14 @@ import logic
 import models
 
 
+def redirect_to_sveder(request):
+    return shortcuts.redirect("http://sveder.com")
+
 def home(request):
+    if "cur_user" in request.session:
+        user = request.session["cur_user"]
+        return shortcuts.redirect("/user/%s" % user.url)
+    
     return shortcuts.render_to_response("index.html")
 
 def user_page(request, url):
@@ -18,10 +25,11 @@ def user_page(request, url):
         return shortcuts.redirect("/trello?error=2")
     
     #TODO: Save longlived cookie
+    request.session["cur_user"] = user_model
+    
     
     feeds = models.Feed.objects.filter(feed_user=user_model)
-    boards = logic.get_all_board_names(user_model.user_token)
-    
+    boards = logic.get_all_boards(user_model.user_token)
     
     return shortcuts.render(request, "user_page.html", {"user" : user_model, "feeds" : feeds, "boards" : boards})
 
@@ -34,4 +42,8 @@ def feed(request, url):
     calendar = logic.create_calendar_from_feed(feed_model)
     ical_feed = calendar.to_ical()
     
-    return HttpResponse(ical_feed, content_type="text/calendar")
+    content_type = "text/calendar"
+    if "debug" in request.REQUEST:
+        content_type="text/html"
+    
+    return HttpResponse(ical_feed, content_type=content_type)

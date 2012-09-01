@@ -11,7 +11,21 @@
     box-shadow: 2px 2px yellow;
 }
 
-#board
+#board_table
 {
-    float: left;
+    display: table;
+    border: 1px solid darkgray;
+    border-radius: 2px;
+    background-color: lightgray;
+}
+
+#board_row
+{
+    display: table-row;
+}
+
+#board_cell
+{
+    display: table-cell;
+    min-width: 150px;
 }

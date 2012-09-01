@@ -10,13 +10,21 @@ class FeedUser(models.Model):
     last_access = models.BigIntegerField()
     created = models.BigIntegerField()
 
+
+class Board(models.Model):
+    board_id = models.CharField(max_length=100, unique=True)
+    
+
 class Feed(models.Model):
-    user_token = models.CharField(max_length=200)
     feed_user = models.ForeignKey(FeedUser)
     salt = models.CharField(max_length=100)
     url = models.CharField(max_length=200)
     is_valid = models.BooleanField(default=True)
     
+    boards = models.ManyToManyField(Board)
+    only_assigned = models.BooleanField(default=False)
+    event_length = models.IntegerField(default=15)
+    is_all_day_event = models.BooleanField(default=False)
+    
     last_access = models.BigIntegerField()
     created = models.BigIntegerField()
-    

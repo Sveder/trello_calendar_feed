@@ -8,7 +8,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title></title>
+	<title>{{ user.user_name }} User Page - Trello to iCal</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
@@ -60,25 +60,53 @@
       
       <div class="new_feed">
 	<h3>Create new feed:</h3>
+	<span>The feed will contain all cards that have due dates as events on you calendar according to the settings and boards you configure below.</span>
 	
 	<div class="feed_form">
-	  <div id="feed_description">
-	    Customize the feed by choosing boards to include cards from. 
+	  
+	  <span>General Options:</span>
+	  
+	  <div class="general_options">
+	    <input type="checkbox" id="is_feed_assigned_to_me"> Only add cards assigned to me.
+	    <br>
+	    <input type="checkbox" onclick="toggle_all_day();" id="all_day_meeting"> Make events all day meetings (limited support - depends on your client).
+	    <br>
+	    Event length (in minutes): <input value="15" type="number" min=1 style="width: 40px" id="meeting_length">
+	  </div>	    
+	  
+	  <div id="board_options">
+	    <span>Customize the feed by choosing boards to include cards from.</span>
+	    <button onclick="toggle_all_boards();">Toggle All</button>
 	  </div>
-	  
-	  <input type="checkbox" id="is_feed_assigned_to_me"> Only add cards assigned to me.
-	  
-	  <div id="boards">
+	  <div id="boards_table">
 	    {% for board in boards %}
-	      <div id="board">
-		<input type="checkbox" id="checkbox_board_{{board}}"> {{ board }}
-	      </div>
+	      {% if forloop.counter0|divisibleby:"4" %}
+		<div class="board_row">
+	      {% endif %}
+	    
+		<div id="board_cell">
+		  <input class="board" type="checkbox" id="checkbox_board_{{board.id}}"> {{ board.name }}
+		</div>
+	      
+	      {% if forloop.counter|divisibleby:"4" %}
+		</div>
+	      {% endif %}
 	    {% endfor %}
+	    
 	  </div>
 	</div>
+	<div><button onclick="create_feed();">Create feed</button></div>
+	
 	
       </div>
+      <br>
+
       
+      
+      
+      
+
+      <br>
       <div class="all_feeds">
 	<h3>Manage your feeds:</h3>
 	{% for feed in feeds %}
