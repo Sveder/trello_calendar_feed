@@ -36,9 +36,10 @@ function after_feed_created(data)
 {
     if (data.error)
     {
-        //TODO: If error
+        alert(data.error);
         return;        
     }
+    
     var actual_url = "http://fun.sveder.com/feed/" + data.feed_url;
     
     $("#feed_url").html("<input width=300 value='" + actual_url + "' />");
@@ -56,6 +57,16 @@ function after_feed_created(data)
               'speedOut'	:	200,
       });
     $("a#new_feed_fancy").click();
+    
+    var feed_id = data.feed_id;
+    var new_line = '<div class="new_feed_item" id="feed_' + feed_id + '">'
+    new_line += '<div id="url_' + feed_id + '"><a href=/feed/' + data.feed_url + '>' + data.feed_url.substr(0, 10) + '...</a></div>';
+    new_line += '<div>' + data.feed_summary + '</div>';
+    new_line += '<div><button class="delete_button" id="del_' + feed_id + '" onclick="confirm_feed_delete(' + feed_id + ');">Delete Feed</button></div>';
+    new_line += '</div>';
+    
+    $(".feeds_list").append(new_line);
+    
 }
 
 function toggle_all_day(){
@@ -77,5 +88,37 @@ function toggle_all_boards()
     {
         $(this).attr("checked", !$(this).attr("checked"));
     });    
+}
+
+
+//Ask whether to delete feed or not:
+function confirm_feed_delete(feed_id)
+{
+    var should_delete = confirm("Are you sure you want to delete the feed? You can always recreate it later, but all applications that are subscribed to it will stop showing new events.")
+    if (should_delete)
+    {
+        delete_feed(feed_id)
+    }
+}
+
+function delete_feed(feed_id)
+{
+    Dajaxice.theapp.delete_feed(after_delete, {"feed_id" : feed_id});
+}
+
+function after_delete(data)
+{
+    if (!data.deleted)
+    {
+        console.log(data.error)
+        return;
+    }
+    
+    //Strike through to indicate deleted:
+    $("#feed_" + data.feed_id).css('text-decoration', 'line-through');
+    //Disable the delete button:
+    $("#del_" + data.feed_id).attr('disabled', true);
+    //Add a message that the feed was deleted:
+    $("#url_" + data.feed_id).html("[deleted]");
 }
 

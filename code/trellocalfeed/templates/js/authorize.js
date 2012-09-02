@@ -5,6 +5,8 @@ var checker_interval = null;
 //Ask the trello client to authorize us
 function authorize()
 {
+    _gaq.push(['_trackEvent', "Authorize", 'clicked', ""]);
+
     change_status("waiting to be authorized");
     Trello.authorize({type    : "popup",
                       expiration : "never",

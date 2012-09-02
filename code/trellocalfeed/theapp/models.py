@@ -39,17 +39,19 @@ class Feed(models.Model):
     
     def get_summary(self):
         try:
-            summary = "A feed with cards "
+            summary = "A feed with cards"
             if self.only_assigned:
-                summary += "assigned only to me, where events are "
+                summary += " assigned only to me"
+            
+            summary += ", where events are "
             
             if self.is_all_day_event:
-                summary += "all day "
+                summary += "all day"
             else:
-                summary += "%s minutes " % self.event_length
+                summary += "%s minutes" % self.event_length
             
             summary += ", from the following %s boards: " % len(self.boards.all())
-            summary += ",".join([i.name for i in self.boards.all()])
+            summary += ", ".join([i.name for i in self.boards.all()])
             return summary
         except:
             print traceback.print_exc()

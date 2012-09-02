@@ -64,17 +64,22 @@ def create_calendar_from_feed(feed):
     Create an ical object from the cards from the feed given.
     """
     client = trello.client.Trello(API_KEY, feed.feed_user.user_token)
+    
+    card_list = []    
+    
     boards = client.list_boards()
     board_ids = feed.boards.all().values_list("board_id")
     board_ids = [i[0] for i in board_ids]
     
-    card_list = []
     for board in boards:
         if board.id not in board_ids:
             continue
         
-        cards = board.list_cards("due,url")
+        cards = board.list_cards()
         for card in cards:
+            if (feed.only_assigned) and (feed.feed_user.trello_member_id not in card.assignees):
+                continue            
+            
             if card.due != None:
                 card_start_time = card.due
                 start_time = datetime.datetime.strptime(card_start_time, "%Y-%m-%dT%H:%M:%S.000Z")
@@ -133,7 +138,6 @@ def create_feed(user, is_only_assigned, all_day_meeting, meeting_length, boards)
     
     return feed_model
     
-
 
 
 def create_calendar_from_cards(card_list, feed):

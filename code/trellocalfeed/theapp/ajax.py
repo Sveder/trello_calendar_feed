@@ -5,6 +5,7 @@ from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
 
 import logic
+import models
 
 @dajaxice_register
 def process_cards(request, token, username, userid):
@@ -24,6 +25,25 @@ def create_feed(request, is_only_assigned, all_day_meeting, meeting_length, boar
         
         user = request.session["cur_user"]
         feed_model = logic.create_feed(user, is_only_assigned, all_day_meeting, meeting_length, boards)
-        return simplejson.dumps({'feed_url' : feed_model.url, 'feed_summary' : feed_model.summary })
+        return simplejson.dumps({'feed_url' : feed_model.url, 'feed_summary' : feed_model.summary, "feed_id" : feed_model.id})
     except:
         return simplejson.dumps({'feed_url' : "", "error" : traceback.format_exc()})
+    
+@dajaxice_register    
+def delete_feed(request, feed_id):
+    try:
+        if "cur_user" not in request.session:
+            return simplejson.dumps({'deleted' : False, "error" : "You need to be authorized to call this."})
+        
+        user = request.session["cur_user"]
+        try:
+            feed_model = models.Feed.objects.get(id=feed_id, feed_user=user)
+        except models.Feed.DoesNotExist:
+            return simplejson.dumps({'deleted' : False, "error" : "You can't call this on an unexistant feed."})
+        
+        feed_model.is_valid = False
+        feed_model.save()
+        return simplejson.dumps({'deleted' : True, "feed_id" : feed_id})
+    
+    except:
+        return simplejson.dumps({'deleted' : False, "error" : traceback.format_exc()})

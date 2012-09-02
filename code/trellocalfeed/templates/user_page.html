@@ -54,7 +54,7 @@
     </div>
 
     <div class="container">
-      <h2>Welcome {{ user.user_name}}</h2>
+      <h2>Welcome {{ user.user_name}},</h2>
       
       <div class="new_feed">
 	<h3>Create new feed:</h3>
@@ -62,7 +62,7 @@
 	
 	<div class="feed_form">
 	  
-	  <span>General Options:</span>
+	  <span><h5>Feed Options:</h5></span>
 	  
 	  <div class="general_options">
 	    <input type="checkbox" id="is_feed_assigned_to_me"> Only add cards assigned to me.
@@ -73,7 +73,8 @@
 	  </div>	    
 	  
 	  <div id="board_options">
-	    <span>Customize the feed by choosing boards to include cards from.</span>
+	    <span>Choose what boards to include:</span>
+	    <br>
 	    <button onclick="toggle_all_boards();">Toggle All</button>
 	  </div>
 	  <div id="boards_table">
@@ -93,7 +94,7 @@
 	    
 	  </div>
 	</div>
-	<div><button onclick="create_feed();">Create feed</button></div>
+	<div><button id="create_feed" onclick="create_feed();">Create feed</button></div>
 	
 	<a style="display:none" id="new_feed_fancy" href="#new-feed"></a>
 	<div style="display:none">
@@ -128,21 +129,20 @@
 	  <div class="single_feed">
 	    <div>Url</div>
 	    <div>Summary</div>
-	    <div>Delete Feed</div>
+	    <div></div>
 	  </div>
 	    
 	  {% for feed in feeds %}
 	    {% if feed.is_valid %}
-	      <div class="single_feed">
-		<div><a href={{ feed.relative_url}}>{{ feed.url|slice:":10" }}...</a></div>
+	      <div class="single_feed" id="feed_{{ feed.id }}">
+		<div id="url_{{ feed.id }}"><a href="{{ feed.relative_url }}">{{ feed.url|slice:":10" }}...</a></div>
 		<div>{{ feed.summary }}</div>
-		<div><button onclick="delete_feed({{ feed.id }});">Delete Feed</button></div>
+		<div><button class="delete_button" id="del_{{ feed.id }}" onclick="confirm_feed_delete({{ feed.id }});">Delete Feed</button></div>
 	      </div>
 	    {% endif %}
 	  {% endfor %}
 	</div>
       </div>
-      
       
       
       <hr>

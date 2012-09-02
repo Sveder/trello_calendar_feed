@@ -20,7 +20,7 @@ def user_page(request, url):
     Generate a user page that contains the form to create a new feed and the collection of all previous feeds.
     """
     try:
-        user_model = models.FeedUser.objects.get(url=url)
+        user_model = models.FeedUser.objects.get(url=url, is_valid=True)
     except:
         return shortcuts.redirect("/trello?error=2")
     
@@ -35,7 +35,7 @@ def user_page(request, url):
 
 def feed(request, url):
     try:
-        feed_model = models.Feed.objects.get(url=url)
+        feed_model = models.Feed.objects.get(url=url, is_valid=True)
     except models.Feed.DoesNotExist:
         return shortcuts.redirect("/trello?error=1")
         

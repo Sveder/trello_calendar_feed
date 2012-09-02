@@ -33,7 +33,7 @@
 .feeds_list
 {
     display: table;
-    margin: 3px;
+    margin: 5px;
 }
 
 .feeds_list > div
@@ -46,11 +46,12 @@
     display: table-cell;
 }
 
+
 .feeds_list > div > div:first-child
 {
     display: table-caption;
 }
-
+8
 .feeds_list > div:first-child
 {
     font-weight: bold;
@@ -59,4 +60,25 @@
 .feeds_list > div:nth-child(even)
 {
     background-color: #dddddd;
+}
+
+.delete_button
+{
+    min-width: 86px;
+}
+
+.feed_form
+{
+    margin: 10px;
+    
+    border: solid 1px gray;
+    border-radius: 5px;
+    
+    background-color: lightyellow;
+    padding: 10px;
+}
+
+.new_feed_item
+{
+    background-color: lightyellow !important;
 }
