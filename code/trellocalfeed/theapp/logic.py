@@ -4,6 +4,7 @@ import string
 import hashlib
 import datetime
 
+import pytz
 import trello
 import icalendar
 
@@ -162,14 +163,14 @@ def _create_calendar():
 
 def _create_event_from_card(card, feed):
     card_start_time = card.due
-    start_time = datetime.datetime.strptime(card_start_time, "%Y-%m-%dT%H:%M:%S.000Z")
+    start_time_struct = time.strptime(card_start_time, "%Y-%m-%dT%H:%M:%S.000Z")
+    start_time = datetime.datetime(*(start_time_struct[:6]), tzinfo=pytz.utc)
     if feed.is_all_day_event:
         end_time = start_time + datetime.timedelta(days=1)
     else:
         end_time = start_time + datetime.timedelta(minutes=feed.event_length)
     
     event = icalendar.Event()
-    
     #hackity hack to maybe not add new line to summary:
     summary = card.name[:50] + "..."
     event.add("summary", "Trello Item: %s" % summary)
@@ -177,7 +178,7 @@ def _create_event_from_card(card, feed):
     
     event.add('dtstart', start_time)
     event.add('dtend', end_time)
-    event.add('dtstamp', start_time)
+    #event.add('dtstamp', start_time)
     event["uid"] = "%strello_to_ical" % card.id
     
     return event
