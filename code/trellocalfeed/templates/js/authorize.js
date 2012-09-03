@@ -30,7 +30,8 @@ function after_authorize()
 //Send the user data using ajax/dajaxice to the server:
 function send_data(username, userid)
 {
-    Dajaxice.theapp.process_cards(after_send, {"token" : Trello.token(), "username" : username, "userid" : userid})
+    var email = $("#email_text").val();
+    Dajaxice.theapp.process_cards(after_send, {"token" : Trello.token(), "username" : username, "userid" : userid, "email" : email})
     change_status("generating your feed - it might take a few seconds.");
 }
 

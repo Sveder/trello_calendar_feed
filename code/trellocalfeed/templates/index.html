@@ -8,7 +8,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title></title>
+	<title>Trello2iCal - Creates an iCalendar feed from you Trello cards</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
@@ -50,7 +50,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Trello to calendar feed app</a>
+          <a class="brand" href="#">Trello2iCal - Create a calendar feed from Trello cards</a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
@@ -65,14 +65,21 @@
     <div class="container">
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
-        <p>This site takes your trello cards and creates an iCalendar feed by their due date that you can plug into Google Calendar, Outlook and <a href="http://en.wikipedia.org/wiki/List_of_applications_with_iCalendar_support">many others</a>.</p>
+        <p>This site takes your trello cards and creates an iCalendar feed by their due date that you can plug into Google Calendar, Outlook and <a href="http://en.wikipedia.org/wiki/List_of_applications_with_iCalendar_support">many others</a>.
+	The feed can be customized by choosing which board to take cards from, choosing meeting length for each card and more.</p>
       </div>
 
       <div class="row">
           <h2>Start here</h2>
           <p>The first step is to authorize this app by clicking on the big button. All this app needs is read only permissions to
 	  read the due dates.</p>
-	  <p><button onclick="authorize();" id="authorize">Authorize</button></p>
+	  <p>
+	    <span>Your email address:</span>
+	    <input type="email" id="email_text" placeholder="Optional"/>
+	    <a href="/trello/faq#why_email" target="_blank">Why do you need this?</a>
+	    <br>
+	    <button onclick="authorize();" id="authorize">Authorize</button>
+	  </p>
 	  <span>Status: <span id="status_message">Please click the big button to start</span>.</span>
 	  
 	  <br><br>
@@ -91,15 +98,15 @@
 
     </div> <!-- /container -->
 
-<script src="js/libs/bootstrap/bootstrap.min.js"></script>
+    <script src="js/libs/bootstrap/bootstrap.min.js"></script>
+    
+    <script src="js/script.js"></script>
+    <script>
+	    var _gaq=[['_setAccount','UA-34506949-1'],['_trackPageview']];
+	    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	    s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
 
-<script src="js/script.js"></script>
-<script>
-	var _gaq=[['_setAccount','UA-34506949-1'],['_trackPageview']];
-	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-	g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-	s.parentNode.insertBefore(g,s)}(document,'script'));
-</script>
-
-</body>
+  </body>
 </html>

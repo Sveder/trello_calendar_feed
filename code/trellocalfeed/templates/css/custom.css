@@ -82,3 +82,19 @@
 {
     background-color: lightyellow !important;
 }
+
+.email_solicit
+{
+    margin: 10px;
+    
+    border: solid 1px gray;
+    border-radius: 5px;
+    
+    background-color: lightcoral;
+    padding: 10px;
+}
+
+#email_text
+{
+    margin-bottom: 0px;
+}

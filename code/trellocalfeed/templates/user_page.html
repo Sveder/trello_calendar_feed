@@ -8,7 +8,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>{{ user.user_name }} User Page - Trello to iCal</title>
+	<title>{{ user.user_name }} User Page - Trello2iCal - Create a calendar feed from Trello cards</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
@@ -48,13 +48,25 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Trello to calendar feed app</a>
+          <a class="brand" href="#">Trello2iCal - Create a calendar feed from Trello cards</a>
         </div>
       </div>
     </div>
 
     <div class="container">
       <h2>Welcome {{ user.user_name}},</h2>
+      
+      {% if not user.email %}
+	<div class="email_solicit">
+	  <span>Trello2iCal is filling a void for people and it is my priority to make it secure and
+	  stable, but like anything there might be glitches. If you want to stay on top of your cards
+	  and get norified if something breaks or Trello2iCal moves or major updates you should add
+	  your email address below:</span>
+	  <br>
+	  <input type="email" id="email_text" placeholder="Optional"/> <button onclick="add_email();">Add email</button>
+	  <a href="/trello/faq#why_email" target="_blank">Why do you need this?</a>
+	</div>
+      {% endif %}
       
       <div class="new_feed">
 	<h3>Create new feed:</h3>

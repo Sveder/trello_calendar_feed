@@ -44,7 +44,7 @@ def get_or_create_feed_in_db(token, user_name):
     
     return feed_model
 
-def get_or_create_user(token, username, userid):
+def get_or_create_user(token, username, userid, email):
     """
     Either get the user model that corresponds to the given user id or create a new user model.
     """
@@ -55,6 +55,10 @@ def get_or_create_user(token, username, userid):
         salt, url = _create_salt_and_url(username)
         user_model = models.FeedUser(user_name=username, user_token=token, url=url, trello_member_id=userid, created=now)
     
+    email = email.strip()
+    if email:
+        user_model.email = email
+        
     user_model.last_access = now
     user_model.save()
     

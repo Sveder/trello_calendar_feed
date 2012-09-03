@@ -9,6 +9,8 @@ class FeedUser(models.Model):
     trello_member_id = models.CharField(max_length=100, unique=True)
     is_valid = models.BooleanField(default=True)
     
+    email = models.CharField(max_length=300, null=True)
+    
     last_access = models.BigIntegerField()
     created = models.BigIntegerField()
 

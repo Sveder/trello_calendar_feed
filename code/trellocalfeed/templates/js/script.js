@@ -28,7 +28,7 @@ function create_feed()
     Dajaxice.theapp.create_feed(after_feed_created, {"is_only_assigned" : is_only_assigned,
                                              "all_day_meeting" : is_all_day,
                                              "meeting_length" : meeting_length,
-                                             "boards" : boards})
+                                             "boards" : boards});
 }
 
 //Show fancybox with the info to subscribe to a feed:
@@ -97,7 +97,7 @@ function confirm_feed_delete(feed_id)
     var should_delete = confirm("Are you sure you want to delete the feed? You can always recreate it later, but all applications that are subscribed to it will stop showing new events.")
     if (should_delete)
     {
-        delete_feed(feed_id)
+        delete_feed(feed_id);
     }
 }
 
@@ -110,7 +110,7 @@ function after_delete(data)
 {
     if (!data.deleted)
     {
-        console.log(data.error)
+        console.log(data.error);
         return;
     }
     
@@ -122,3 +122,17 @@ function after_delete(data)
     $("#url_" + data.feed_id).html("[deleted]");
 }
 
+function add_email()
+{
+    var email = $("#email_text").val();
+    Dajaxice.theapp.add_email(after_add_email, {"email" : email});
+}
+
+function after_add_email(data)
+{
+    if (data.error)
+    {
+        alert(data.error);
+    }
+    console.log("email added");
+}

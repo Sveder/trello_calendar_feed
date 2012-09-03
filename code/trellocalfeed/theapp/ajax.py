@@ -8,9 +8,9 @@ import logic
 import models
 
 @dajaxice_register
-def process_cards(request, token, username, userid):
+def process_cards(request, token, username, userid, email):
     try:
-        user = logic.get_or_create_user(token, username, userid)
+        user = logic.get_or_create_user(token, username, userid, email)
         return simplejson.dumps({'user_url' : user.url,})
     except:
         return simplejson.dumps({'user_url' : "", "error" : traceback.format_exc()})
@@ -47,3 +47,17 @@ def delete_feed(request, feed_id):
     
     except:
         return simplejson.dumps({'deleted' : False, "error" : traceback.format_exc()})
+    
+@dajaxice_register    
+def add_email(request, email):
+    try:
+        if "cur_user" not in request.session:
+            return simplejson.dumps({"error" : "You need to be authorized to call this."})
+        
+        user = request.session["cur_user"]
+        user.email = email
+        user.save()
+        return simplejson.dumps({"error" : ""})
+    except:
+        print traceback.format_exc()
+        return simplejson.dumps({"error" : traceback.format_exc()})
