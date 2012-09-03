@@ -28,6 +28,7 @@
 	 -->
 
 	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/footer.css">
 	  
 	<script src="js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
 	
@@ -39,6 +40,10 @@
 	
 </head>
 <body>
+  <div id="wrap">
+  <div id="main">
+
+  
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
 
@@ -84,29 +89,8 @@
 	  
 	  <br><br>
       </div>
+    </div>
+  </div>
+  </div>
 
-      
-      
-      
-      <hr>
-	
-
-      <footer>
-        <p>Visit <a href="http://sveder.com">sveder.com</a> for more awesomeness!</p>
-		Check out the code to this site <a href="https://github.com/Sveder/trello_calendar_feed">on github.</a>
-      </footer>
-
-    </div> <!-- /container -->
-
-    <script src="js/libs/bootstrap/bootstrap.min.js"></script>
-    
-    <script src="js/script.js"></script>
-    <script>
-	    var _gaq=[['_setAccount','UA-34506949-1'],['_trackPageview']];
-	    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-	    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-	    s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
-
-  </body>
-</html>
+{% include "footer.html" %}

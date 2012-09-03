@@ -81,7 +81,7 @@
 	<span class="faq_question">Q: What is a feed? Why do I need to create a feed?</span>
 	<br>
 	A: Trello2iCal does one thing - creates an iCalendar feed from your Trello cards. This feed is a textual
-	blob of text conforming to some protocol that your calendar client programs can understand (but you don't
+	blob conforming to the iCal protocol that your calendar client programs can understand (but you don't
 	need to worry about). To create a feed you need to select some basic self explanatory options and click
 	on the "Create feed" button and then follow the on-screen instructions.
 	<br>
@@ -117,7 +117,10 @@
 	<a name="why_email" id="why_email"></a>
 	<span class="faq_question">Q: Why do you need my email?</span>
 	<br>
-	A: This app started as a small script for my personal use but I spend some time polishing it and adding options so this will be useful for other people. I can foresee some things I might need to do to that can break the feeds (move to a dedicated URL instead of fun.sveder.com which is for experiments is one such breaking thing) and without your email I have no way of telling you that. I wouldn't want you to lose the Trello-calendar link out of the blue and so I strongly encourage you fill your email address.
+	A: This app started as a small script for my personal use but since it evolved to be useful for other people.
+	I can foresee some things I might need to do to that can break the feeds (for example move to a dedicated domain instead
+	of fun.sveder.com) and without your email I have no way of telling you that. I wouldn't want you to lose the
+	Trello to calendar link out of the blue and so I strongly encourage you fill your email address.
 	<br>
 	<br>
 
@@ -125,21 +128,34 @@
   
 	<span class="faq_question">Q: How secure is this?</span>
 	<br>
-	A: Security is not as simple as a number or yes/no. Like every useful service this application is not bulletproof. Let's break this down:
+	A: Security is not as simple as a number or yes/no. Like every useful service this application
+	is not bulletproof. Let's break this down:
 	<br>
 	<br>
   
 	<span class="faq_question">Q: When I authorize Trello2iCal, what data do you have access to?</span>
 	<br>
-	A: When you authorize Trello2iCal I ask for read permissions on all your boards. This gives me a huge responsibility and frankly I would prefer that Trello would have finer permissions to only allow my app to read cards with Due Dates or even narrower.
+	A: When you authorize Trello2iCal you give this app read permissions on all your boards. This gives me a
+	huge responsibility and frankly I would prefer that Trello would have finer permissions to only allow my
+	app to read cards with Due Dates or even narrower.
 	<br>
 	<br>
   
 	<span class="faq_question">Q: In what ways can my data be compromised?</span>
 	<br>
-	A: Before we start enumerating security concerns I feel this app is pretty secure and all these things have a miniscule chance of happening. In any case you should fill in you email address as a precaution.
-	In the worst case scenario if my site is hacked and my DB compromised an attacker could have read access to all your boards. If this happens you'll be able to ask Trello customer service to revoke your token and prevent further read access.
-	Another scenario that is also rare is if someone will try to fuzz the feed or user urls. I didn't want to make another login for you to remember, plus the support for authentication with iCal are sketchy and so this site uses tokens to keep track of users and feeds. Token are almost as secure as passwords in most real world scenarios but just like passwords can be broken token can be fuzzed by calling every available token. This is not practical as I use a huge url length, a very random salt which will probably be better than the average password and a unique salt for each feed and user.
+	A: Before we start enumerating security concerns I feel this app is pretty secure and all these things
+	have a miniscule chance of happening. In any case you should fill in you email address as a precaution.
+	<br>
+	Let's start with the worst case scenario if the site is hacked and the DB compromised an attacker could
+	have read access to all your boards. If this happens you'll be able to ask Trello customer service to
+	revoke your token and prevent further read access.
+	Another rare scenario is an attacker fuzzing the user or feed urls. I didn't want to make another login for you to
+	remember, plus the support for authentication with iCal is sketchy and so this site uses tokens to keep track
+	of users and feeds. Tokens are almost as secure as passwords in most real world scenarios but just like
+	passwords can be broken tokens can be fuzzed by calling every possible token.
+	This is not practical as the app uses a huge url length, a very random salt which will probably be better than
+	the average password and a unique salt for each feed and user, but it is theoretically possible for someone
+	to try.
 	<br>
 	<br>
 	  
@@ -150,24 +166,6 @@
 	<br>
       </p>
       <hr>
-	
+    </div>
 
-      <footer>
-        <p>Visit <a href="http://sveder.com">sveder.com</a> for more awesomeness!</p>
-		Check out the code to this site <a href="https://github.com/Sveder/trello_calendar_feed">on github.</a>
-      </footer>
-
-    </div> <!-- /container -->
-
-<script src="js/libs/bootstrap/bootstrap.min.js"></script>
-
-<script src="js/script.js"></script>
-<script>
-	var _gaq=[['_setAccount','UA-34506949-1'],['_trackPageview']];
-	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-	g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-	s.parentNode.insertBefore(g,s)}(document,'script'));
-</script>
-
-</body>
-</html>
+{% include "footer.html" %}

@@ -33,7 +33,6 @@
 .feeds_list
 {
     display: table;
-    margin: 5px;
 }
 
 .feeds_list > div
@@ -47,11 +46,6 @@
 }
 
 
-.feeds_list > div > div:first-child
-{
-    display: table-caption;
-}
-8
 .feeds_list > div:first-child
 {
     font-weight: bold;
@@ -94,6 +88,17 @@
     padding: 10px;
 }
 
+.feeds_list
+{
+    margin: 10px;
+    
+    border: solid 1px gray;
+    border-radius: 5px;
+    
+    background-color: lightyellow;
+    padding: 10px;
+}
+
 #email_text
 {
     margin-bottom: 0px;
@@ -112,4 +117,16 @@ h3
 .faq_link
 {
     margin-left: 5px;
+}
+
+#footer_wrap
+{
+    background-color: lightgreen;
+    padding: 10px;
+}
+
+#footer_content
+{
+    width:51.25%;
+	margin:0px auto;    
 }
