@@ -60,6 +60,59 @@
 	A: This site connects your <a href="http://trello.com">Trello</a> cards to your calendar using the due date value on the cards. It uses a protocol named <a href="http://en.wikipedia.org/wiki/ICalendar">iCalendar</a> (or iCal) to publish a feed that your calendar client can connect to and display the cards.
 	<br>
 	<br>
+	  
+	<span class="faq_question">Q: How do I see the cards on my calendar?</span>
+	<br>
+	A: First you need the URL of the feed you created. When you click on create feed you should get a URL
+	which you need to copy. If you closed it do not worry - on your user page you should have a list of all
+	the feeds you created and their options. To get the URL right click on your desired feed and choose "copy link location".
+	Now you need to tell your calendar program to go to the URL. iCal is supported by too many client to list here
+	(<a href="http://en.wikipedia.org/wiki/List_of_applications_with_iCalendar_support">Wikipedia has a list</a>)
+	but here are links to instructions to the most popular clients:
+	<br>
+	To add it to Google Calendar follow <a href="http://support.google.com/calendar/bin/answer.py?hl=en&answer=37100">these instructions.</a><br>
+	To add it to Outlook follow <a href="http://office.microsoft.com/en-us/outlook-help/view-and-subscribe-to-internet-calendars-HA010167325.aspx">these instructions.</a><br>
+	To add it to Apple iCal follow <a href="http://www.apple.com/findouthow/mac/#subscribeical">these instructions.</a><br>
+	For other calendar programs <a href="http://mcb.berkeley.edu/academic-programs/seminars/ical-feed-instructions/">try this page</a> or search Google.
+	<br>
+	<br>
+	
+	<a name="create" id="create"></a>
+	<span class="faq_question">Q: What is a feed? Why do I need to create a feed?</span>
+	<br>
+	A: Trello2iCal does one thing - creates an iCalendar feed from your Trello cards. This feed is a textual
+	blob of text conforming to some protocol that your calendar client programs can understand (but you don't
+	need to worry about). To create a feed you need to select some basic self explanatory options and click
+	on the "Create feed" button and then follow the on-screen instructions.
+	<br>
+	<br>
+	  
+	<a name="manage" id="manage"></a>
+	<span class="faq_question">Q: What am I managing? Why do I need to manage things?</span>
+	<br>
+	A: Trello2iCal saves all the feeds you created. You might need to retrieve the URL for a certain
+	calendar, for example to subscribe to it in a new client program, or you might want to delete the feed.
+	In this section you can do all these things.
+	<br>
+	<br>
+	  
+	<span class="faq_question">Q: Why should I delete feeds?</span>
+	<br>
+	A: Since these feeds have personal information from trello in them like card names and card descriptions you
+	should only keep the feeds you are subscribed to in a client open. If there is a feed you are sure you are not
+	subscribed to you should delete it (you can always recreate them later).
+	<br>
+	<br>
+	
+	<span class="faq_question">Q: Why is the generating feed, subscribing to a feed and/or generating user page slow?</span>
+	<br>
+	A: Trello2iCal communicates with Trello servers to get all cards from a specific board. This means the app
+	sends a network request for each board, which takes time. Trello has no easy way to get you full list of
+	cards and so generating a feed from multiple boards might take a few seconds. Don't worry if you see your
+	calendar client taking some time to fetch the calendar unless it gets extreme. The most that I have ever seen
+	is about 30 seconds.
+	<br>
+	<br>
   
 	<a name="why_email" id="why_email"></a>
 	<span class="faq_question">Q: Why do you need my email?</span>
@@ -67,6 +120,7 @@
 	A: This app started as a small script for my personal use but I spend some time polishing it and adding options so this will be useful for other people. I can foresee some things I might need to do to that can break the feeds (move to a dedicated URL instead of fun.sveder.com which is for experiments is one such breaking thing) and without your email I have no way of telling you that. I wouldn't want you to lose the Trello-calendar link out of the blue and so I strongly encourage you fill your email address.
 	<br>
 	<br>
+
 
   
 	<span class="faq_question">Q: How secure is this?</span>

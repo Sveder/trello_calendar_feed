@@ -103,3 +103,13 @@
 {
     font-weight: bold;
 }
+
+h3
+{
+    display: inline;
+}
+
+.faq_link
+{
+    margin-left: 5px;
+}
