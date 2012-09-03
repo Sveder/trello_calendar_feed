@@ -170,7 +170,8 @@ def _create_event_from_card(card, feed):
     start_time_struct = time.strptime(card_start_time, "%Y-%m-%dT%H:%M:%S.000Z")
     start_time = datetime.datetime(*(start_time_struct[:6]), tzinfo=pytz.utc)
     if feed.is_all_day_event:
-        end_time = start_time + datetime.timedelta(days=1)
+        start_time = datetime.date(start_time.year, start_time.month, start_time.day)
+        end_time = start_time
     else:
         end_time = start_time + datetime.timedelta(minutes=feed.event_length)
     
@@ -180,8 +181,8 @@ def _create_event_from_card(card, feed):
     event.add("summary", "Trello Item: %s" % summary)
     event.add('DESCRIPTION', card.url)
     
-    event.add('dtstart', start_time)
-    event.add('dtend', end_time)
+    event.add('DTSTART', start_time)
+    event.add('DTEND', end_time)
     
     now_struct = time.gmtime()
     stamp_time = datetime.datetime(*now_struct[:6])
