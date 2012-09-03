@@ -1,6 +1,8 @@
 //Generate instructions for the user
 function show_instructions(url, boards)
 {
+    _gaq.push(['_trackEvent', "Show Instructions", 'clicked', ""]);
+
     var actual_url = "http://fun.sveder.com/feed/" + url;
     
     $("#feed_url").html("<input width=300 value='" + actual_url + "' />");
@@ -13,6 +15,8 @@ function show_instructions(url, boards)
 
 function create_feed()
 {
+    _gaq.push(['_trackEvent', "Create Feed", 'clicked', ""]);
+
     //Get general options:
     var is_only_assigned = $('#is_feed_assigned_to_me').is(':checked');
     var is_all_day = $('#all_day_meeting').is(':checked');
@@ -34,6 +38,8 @@ function create_feed()
 //Show fancybox with the info to subscribe to a feed:
 function after_feed_created(data)
 {
+    _gaq.push(['_trackEvent', "Feed Created", 'clicked', ""]);
+
     if (data.error)
     {
         alert(data.error);
@@ -94,6 +100,7 @@ function toggle_all_boards()
 //Ask whether to delete feed or not:
 function confirm_feed_delete(feed_id)
 {
+    _gaq.push(['_trackEvent', "Feed Delete", 'clicked', ""]);
     var should_delete = confirm("Are you sure you want to delete the feed? You can always recreate it later, but all applications that are subscribed to it will stop showing new events.")
     if (should_delete)
     {
@@ -103,6 +110,7 @@ function confirm_feed_delete(feed_id)
 
 function delete_feed(feed_id)
 {
+    _gaq.push(['_trackEvent', "Deleted feed", 'clicked', ""]);
     Dajaxice.theapp.delete_feed(after_delete, {"feed_id" : feed_id});
 }
 
@@ -124,6 +132,7 @@ function after_delete(data)
 
 function add_email()
 {
+    _gaq.push(['_trackEvent', "Added email", 'clicked', ""]);
     var email = $("#email_text").val();
     Dajaxice.theapp.add_email(after_add_email, {"email" : email});
 }

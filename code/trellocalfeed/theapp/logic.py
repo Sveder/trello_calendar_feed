@@ -182,7 +182,11 @@ def _create_event_from_card(card, feed):
     
     event.add('dtstart', start_time)
     event.add('dtend', end_time)
-    #event.add('dtstamp', start_time)
+    
+    now_struct = time.gmtime()
+    stamp_time = datetime.datetime(*now_struct[:6])
+    event.add('dtstamp', stamp_time)
+    
     event["uid"] = "%strello_to_ical" % card.id
     
     return event
