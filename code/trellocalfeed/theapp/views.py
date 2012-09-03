@@ -8,6 +8,9 @@ import models
 def redirect_to_sveder(request):
     return shortcuts.redirect("http://sveder.com")
 
+def faq(request):
+    return shortcuts.render_to_response("faq.html")
+
 def home(request):
     if "cur_user" in request.session:
         user = request.session["cur_user"]

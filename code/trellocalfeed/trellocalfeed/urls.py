@@ -14,10 +14,11 @@ dajaxice_autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^trello$', 'theapp.views.home', name='home'),
+    url(r'^/?trello$', 'theapp.views.home', name='home'),
     url(r'^/?$', 'theapp.views.redirect_to_sveder', name='redirect_to_sveder'),
     url(r'^user/(.+)$', 'theapp.views.user_page', name='user_page'),
     url(r'^feed/(.+)$', 'theapp.views.feed', name='feed'),
+    url(r'^/?trello/faq$', 'theapp.views.faq', name='faq'),
     
     
     (r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),

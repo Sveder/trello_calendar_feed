@@ -1,0 +1,119 @@
+{% load dajaxice_templatetags %}
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Trello2iCal Frequently Asked Questions</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="viewport" content="width=device-width">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+	
+	<script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+	<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+	
+	<!--<link rel="stylesheet/less" href="less/style.less">
+	<script src="js/libs/less-1.3.0.min.js"></script>-->
+	
+	<link rel="stylesheet" href="/css/style.css">
+		
+	<!-- Use SimpLESS (Win/Linux/Mac) or LESS.app (Mac) to compile your .less files
+	to style.css, and replace the 2 lines above by this one:
+
+	<link rel="stylesheet" href="less/style.css">
+	 -->
+
+	<link rel="stylesheet" href="/css/custom.css">
+	<script src="/js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>	
+	<script src="https://api.trello.com/1/client.js?key=9cf5a88e6a3a9897d59e55bfc327b5d5"></script>
+	{% dajaxice_js_import %}
+	<script src="/js/script.js"></script>
+</head>
+<body>
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Trello2iCal - Create a calendar feed from Trello cards</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <p>
+	<span class="faq_question">Q: What is this?</span>
+	<br>
+	A: This site connects your <a href="http://trello.com">Trello</a> cards to your calendar using the due date value on the cards. It uses a protocol named <a href="http://en.wikipedia.org/wiki/ICalendar">iCalendar</a> (or iCal) to publish a feed that your calendar client can connect to and display the cards.
+	<br>
+	<br>
+  
+	<a name="why_email" id="why_email"></a>
+	<span class="faq_question">Q: Why do you need my email?</span>
+	<br>
+	A: This app started as a small script for my personal use but I spend some time polishing it and adding options so this will be useful for other people. I can foresee some things I might need to do to that can break the feeds (move to a dedicated URL instead of fun.sveder.com which is for experiments is one such breaking thing) and without your email I have no way of telling you that. I wouldn't want you to lose the Trello-calendar link out of the blue and so I strongly encourage you fill your email address.
+	<br>
+	<br>
+
+  
+	<span class="faq_question">Q: How secure is this?</span>
+	<br>
+	A: Security is not as simple as a number or yes/no. Like every useful service this application is not bulletproof. Let's break this down:
+	<br>
+	<br>
+  
+	<span class="faq_question">Q: When I authorize Trello2iCal, what data do you have access to?</span>
+	<br>
+	A: When you authorize Trello2iCal I ask for read permissions on all your boards. This gives me a huge responsibility and frankly I would prefer that Trello would have finer permissions to only allow my app to read cards with Due Dates or even narrower.
+	<br>
+	<br>
+  
+	<span class="faq_question">Q: In what ways can my data be compromised?</span>
+	<br>
+	A: Before we start enumerating security concerns I feel this app is pretty secure and all these things have a miniscule chance of happening. In any case you should fill in you email address as a precaution.
+	In the worst case scenario if my site is hacked and my DB compromised an attacker could have read access to all your boards. If this happens you'll be able to ask Trello customer service to revoke your token and prevent further read access.
+	Another scenario that is also rare is if someone will try to fuzz the feed or user urls. I didn't want to make another login for you to remember, plus the support for authentication with iCal are sketchy and so this site uses tokens to keep track of users and feeds. Token are almost as secure as passwords in most real world scenarios but just like passwords can be broken token can be fuzzed by calling every available token. This is not practical as I use a huge url length, a very random salt which will probably be better than the average password and a unique salt for each feed and user.
+	<br>
+	<br>
+	  
+	<span class="faq_question">Q: What about privacy?</span>
+	<br>
+	A: As I said before - you are trusting me with read access to your Trello account. I don't take this responsibility lightly and I will never allow anyone (including myself) to connect to your Trello account for any reason. If you decide (and I strongly encourage you) to fill your email address you should rest assured you will never get spam or anything that doesn't concern Trello2iCal from me nor will I give out your email address. This goes for every other piece of information like your name.
+	<br>
+	<br>
+      </p>
+      <hr>
+	
+
+      <footer>
+        <p>Visit <a href="http://sveder.com">sveder.com</a> for more awesomeness!</p>
+		Check out the code to this site <a href="https://github.com/Sveder/trello_calendar_feed">on github.</a>
+      </footer>
+
+    </div> <!-- /container -->
+
+<script src="js/libs/bootstrap/bootstrap.min.js"></script>
+
+<script src="js/script.js"></script>
+<script>
+	var _gaq=[['_setAccount','UA-32696808-1'],['_trackPageview']];
+	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+</body>
+</html>
