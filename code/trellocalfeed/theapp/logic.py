@@ -169,9 +169,10 @@ def _create_event_from_card(card, feed):
     card_start_time = card.due
     start_time_struct = time.strptime(card_start_time, "%Y-%m-%dT%H:%M:%S.000Z")
     start_time = datetime.datetime(*(start_time_struct[:6]), tzinfo=pytz.utc)
+    
     if feed.is_all_day_event:
         start_time = datetime.date(start_time.year, start_time.month, start_time.day)
-        end_time = start_time
+        end_time = start_time + datetime.timedelta(days=1)
     else:
         end_time = start_time + datetime.timedelta(minutes=feed.event_length)
     
@@ -183,6 +184,12 @@ def _create_event_from_card(card, feed):
     
     event.add('DTSTART', start_time)
     event.add('DTEND', end_time)
+    
+    #Add some specific headers for full day events:
+    if feed.is_all_day_event:
+        event.add("X-FUNAMBOL-ALLDAY", "TRUE")
+        event.add("X-MICROSOFT-CDO-ALLDAYEVENT", "TRUE") 
+        
     
     now_struct = time.gmtime()
     stamp_time = datetime.datetime(*now_struct[:6])
