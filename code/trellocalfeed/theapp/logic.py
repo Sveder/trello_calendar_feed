@@ -86,10 +86,7 @@ def create_calendar_from_feed(feed):
                 continue            
             
             if card.due != None:
-                card_start_time = card.due
-                start_time = datetime.datetime.strptime(card_start_time, "%Y-%m-%dT%H:%M:%S.000Z")
-                if start_time > datetime.datetime.now():
-                    card_list.append(card)
+                card_list.append(card)
                     
     return create_calendar_from_cards(card_list, feed)
     
@@ -176,11 +173,17 @@ def _create_event_from_card(card, feed):
     else:
         end_time = start_time + datetime.timedelta(minutes=feed.event_length)
     
+    event_description = "Card URL -\n%s" % card.url
+    if card.description:
+        event_description = "%s\n%s" % (card.description, event_description)
+        
+    event_description = event_description.replace("\n", "\\n")
+    event_summary = card.name
+    
     event = icalendar.Event()
-    #hackity hack to maybe not add new line to summary:
-    summary = card.name[:50] + "..."
-    event.add("summary", "Trello Item: %s" % summary)
-    event.add('DESCRIPTION', card.url)
+    
+    event.add("summary", event_summary)
+    event.add('DESCRIPTION', event_description)
     
     event.add('DTSTART', start_time)
     event.add('DTEND', end_time)
@@ -190,7 +193,6 @@ def _create_event_from_card(card, feed):
         event.add("X-FUNAMBOL-ALLDAY", "TRUE")
         event.add("X-MICROSOFT-CDO-ALLDAYEVENT", "TRUE") 
         
-    
     now_struct = time.gmtime()
     stamp_time = datetime.datetime(*now_struct[:6])
     event.add('dtstamp', stamp_time)
