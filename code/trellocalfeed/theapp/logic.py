@@ -173,20 +173,24 @@ def _create_event_from_card(card, feed):
     else:
         end_time = start_time + datetime.timedelta(minutes=feed.event_length)
     
-    event_description = "Card URL -\n%s" % card.url
+    event_description = u"Card URL -\n%s" % card.url
     if card.description:
-        event_description = "%s\n%s" % (card.description, event_description)
+        event_description = u"%s\n%s" % (card.description, event_description)
         
     event_description = event_description.replace("\n", "\\n")
     event_summary = card.name
+    event_location = card.board.name
     
     event = icalendar.Event()
     
-    event.add("summary", event_summary)
-    event.add('DESCRIPTION', event_description)
+    event.add("SUMMARY", event_summary)
+    event.add("DESCRIPTION", event_description)
     
-    event.add('DTSTART', start_time)
-    event.add('DTEND', end_time)
+    event.add("URL", card.url)
+    event.add("LOCATION", event_location)
+    
+    event.add("DTSTART", start_time)
+    event.add("DTEND", end_time)
     
     #Add some specific headers for full day events:
     if feed.is_all_day_event:
@@ -195,7 +199,7 @@ def _create_event_from_card(card, feed):
         
     now_struct = time.gmtime()
     stamp_time = datetime.datetime(*now_struct[:6])
-    event.add('dtstamp', stamp_time)
+    event.add("DTSTAMP", stamp_time)
     
     event["uid"] = "%strello_to_ical" % card.id
     

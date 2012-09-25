@@ -48,5 +48,7 @@ def feed(request, url):
     content_type = "text/calendar"
     if "debug" in request.REQUEST:
         content_type="text/html"
+        
+    content_type += "; charset=utf-8"
     
     return HttpResponse(ical_feed, content_type=content_type)
