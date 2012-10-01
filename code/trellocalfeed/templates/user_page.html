@@ -35,6 +35,18 @@
 	<script src="https://api.trello.com/1/client.js?key=9cf5a88e6a3a9897d59e55bfc327b5d5"></script>
 	{% dajaxice_js_import %}
 	<script src="/js/script.js"></script>
+	
+	<script type="text/javascript">
+	/* <![CDATA[ */
+	    (function() {
+		var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+		s.type = 'text/javascript';
+		s.async = true;
+		s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+		t.parentNode.insertBefore(s, t);
+	    })();
+/* ]]> */</script>
+	
 </head>
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -55,6 +67,9 @@
 
     <div class="container">
       <h2>Welcome {{ user.user_name}},</h2>
+      <span class="flattr_wrapper"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://fun.sveder.com/sveder"></a>
+<noscript><a href="http://flattr.com/thing/905804/Trello2iCal-connect-Trello-to-your-calendar-using-due-dates-on-cards-" target="_blank">
+<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript></span>
       
       {% if not user.email %}
 	<div class="email_solicit">

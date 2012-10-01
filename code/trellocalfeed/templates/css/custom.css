@@ -130,3 +130,8 @@ h3
     width:51.25%;
 	margin:0px auto;    
 }
+
+.flattr_wrapper
+{
+    float: right;
+}

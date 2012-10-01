@@ -173,7 +173,7 @@ def _create_event_from_card(card, feed):
     else:
         end_time = start_time + datetime.timedelta(minutes=feed.event_length)
     
-    event_description = u"Card URL -\n%s" % card.url
+    event_description = u"\n---\nCard URL -\n%s" % card.url
     if card.description:
         event_description = u"%s\n%s" % (card.description, event_description)
         
