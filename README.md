@@ -13,3 +13,5 @@ Deploying on your own server
 ------------
 
 TODO: Document this - All libraries, requirment.txt for pip etc.
+
+Now with CI?
