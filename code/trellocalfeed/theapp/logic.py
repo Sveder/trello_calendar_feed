@@ -1,3 +1,4 @@
+import json
 import time
 import random
 import string
@@ -162,6 +163,16 @@ def _create_calendar():
     cal.add("version", "2.0")
     return cal
 
+def _get_categories_from_labels(card):
+    card_date = card.json_obj
+    labels = card_date["labels"]
+    categories = []
+    for label in labels:
+        label_name = label["name"] if label["name"] else label["color"]
+        categories.append(label_name)
+        
+    return categories
+
 def _create_event_from_card(card, feed):
     card_start_time = card.due
     start_time_struct = time.strptime(card_start_time, "%Y-%m-%dT%H:%M:%S.000Z")
@@ -181,10 +192,14 @@ def _create_event_from_card(card, feed):
     event_summary = card.name
     event_location = card.board.name
     
+    categories = _get_categories_from_labels(card)
+    categories = ",".join(categories)
+    
     event = icalendar.Event()
     
     event.add("SUMMARY", event_summary)
     event.add("DESCRIPTION", event_description)
+    event.add("CATEGORIES", categories)
     
     event.add("URL", card.url)
     event.add("LOCATION", event_location)

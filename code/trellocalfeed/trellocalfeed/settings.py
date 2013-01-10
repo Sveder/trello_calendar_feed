@@ -123,6 +123,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.core.context_processors.request",
                                "django.contrib.messages.context_processors.messages")
 
+SENTRY_DSN = 'https://3f0091fdcfe744edbb692bc5667447b4:c3d2c9757b6f495b94b70cef47e7c6cd@app.getsentry.com/3974'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -135,6 +136,7 @@ INSTALLED_APPS = (
     'debug_toolbar',    
     'dajaxice',
     'south',
+    'raven.contrib.django',
     
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',

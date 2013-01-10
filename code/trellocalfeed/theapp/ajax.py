@@ -1,6 +1,7 @@
 import json
 import traceback
 
+import django.core.mail as mail
 from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
 
@@ -57,6 +58,14 @@ def add_email(request, email):
         user = request.session["cur_user"]
         user.email = email
         user.save()
+        
+        try:
+            mail.send_mail("A new trello2ical user", "I got a new sign up:\n%s" % email,
+                           "m@sveder.com", ["m@sveder.com"])
+        except:
+            print "an email was not sent buhuu"
+            pass
+        
         return simplejson.dumps({"error" : ""})
     except:
         print traceback.format_exc()
