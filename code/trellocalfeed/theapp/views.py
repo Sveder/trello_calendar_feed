@@ -41,6 +41,14 @@ def feed(request, url):
         feed_model = models.Feed.objects.get(url=url, is_valid=True)
     except models.Feed.DoesNotExist:
         return shortcuts.redirect("/trello?error=1")
+    
+    #There are some old feeds around that have no user attacehd to them, and so I can't get
+    #their token and actually create the feed, so I check this now and redirect instead
+    #of crashing. Reported by Sentry.
+    try:
+        feed_model.feed_user
+    except models.FeedUser.DoesNotExist:
+        return shortcuts.redirect("/trello?error=2")
         
     calendar = logic.create_calendar_from_feed(feed_model)
     ical_feed = calendar.to_ical()
