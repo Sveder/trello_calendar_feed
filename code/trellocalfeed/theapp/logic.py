@@ -188,7 +188,6 @@ def _create_event_from_card(card, feed):
     if card.description:
         event_description = u"%s\n%s" % (card.description, event_description)
         
-    event_description = event_description.replace("\n", "\\n")
     event_summary = card.name
     event_location = card.board.name
     
