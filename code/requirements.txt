@@ -1,0 +1,9 @@
+django
+south
+django-debug-toolbar
+raven
+django-dajaxice
+mysql-python
+pytz
+trello
+icalendar
