@@ -1,6 +1,8 @@
 import os.path as path
 
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls import patterns, include, url
+
 from settings import TEMPLATE_DIRS
 import settings
 
@@ -49,3 +51,5 @@ urlpatterns = patterns('',
     
     
 )
+
+urlpatterns += staticfiles_urlpatterns()
