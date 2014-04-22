@@ -142,6 +142,8 @@ function after_add_email(data)
     if (data.error)
     {
         alert(data.error);
+        return;
     }
     console.log("email added");
+    $(".email_solicit").fadeOut();
 }
