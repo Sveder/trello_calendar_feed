@@ -2,8 +2,9 @@ django
 south
 django-debug-toolbar
 raven
+httplib2
+oauth2
 django-dajaxice
 mysql-python
 pytz
-trello
 icalendar

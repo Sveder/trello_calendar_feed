@@ -4,6 +4,12 @@ from django.http import HttpResponse
 import logic
 import models
 
+def _get_user_from_user_id(user_id):
+    """
+    Return a user model from the user_id.
+    """
+    user_model = models.FeedUser.objects.get(id=user_id)
+    return user_model
 
 def redirect_to_sveder(request):
     return shortcuts.redirect("http://sveder.com")
@@ -13,7 +19,7 @@ def faq(request):
 
 def home(request):
     if "cur_user" in request.session:
-        user = request.session["cur_user"]
+        user = _get_user_from_user_id(request.session["cur_user"])
         return shortcuts.redirect("/user/%s" % user.url)
     
     return shortcuts.render_to_response("index.html")
@@ -28,7 +34,7 @@ def user_page(request, url):
         return shortcuts.redirect("/trello?error=2")
     
     #TODO: Save longlived cookie
-    request.session["cur_user"] = user_model
+    request.session["cur_user"] = user_model.id
     
     
     feeds = models.Feed.objects.filter(feed_user=user_model)
