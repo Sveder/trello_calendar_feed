@@ -61,7 +61,7 @@ def feed(request, url):
     
     content_type = "text/calendar"
     if "debug" in request.REQUEST:
-        content_type="text/html"
+        content_type="text/plain"
         
     content_type += "; charset=utf-8"
     
