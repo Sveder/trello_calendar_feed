@@ -1,1 +1,2 @@
 *.pyc
+/code/trellocalfeed/trellocalfeed/settings/secret_settings.py

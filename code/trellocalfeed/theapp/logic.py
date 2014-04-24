@@ -8,10 +8,11 @@ import datetime
 import pytz
 import trello
 import icalendar
+from django.conf.settings import TRELLO_API_KEY as API_KEY
+
 
 import models
 
-API_KEY = "9cf5a88e6a3a9897d59e55bfc327b5d5"
 
 SALT_ALPHABET = string.ascii_letters + string.digits + "!@#$%^&*()_+{}[]"
 SALT_LENGTH = 16
