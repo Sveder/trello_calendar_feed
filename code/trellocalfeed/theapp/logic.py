@@ -8,7 +8,9 @@ import datetime
 import pytz
 import trello
 import icalendar
-from django.conf.settings import TRELLO_API_KEY as API_KEY
+from django.conf import settings
+
+API_KEY = settings.TRELLO_API_KEY
 
 
 import models

@@ -15,12 +15,14 @@ DATABASES = {
     }
 }
 
-TEMPLATE_DIRS += (
+TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "C:/work/trello2iCal/trello_calendar_feed/code/trellocalfeed/templates",
+    "C:/work/trello2iCal/trello_calendar_feed/code/trellocalfeed/templates"
 )
 
 MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 INSTALLED_APPS += ('debug_toolbar',)
+
+SOUTH_TESTS_MIGRATE = False
