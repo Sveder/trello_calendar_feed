@@ -28,26 +28,6 @@ def _create_salt_and_url(user_name):
     url = hashlib.sha512(user_name + salt).hexdigest()
     return salt, url
 
-def get_or_create_feed_in_db(token, user_name):
-    """
-    Either get the feed model for the user_name given or create it if it doesn't exist.
-    """
-    now = time.time()
-    try:
-        feed_model = models.Feed.objects.get(user_name=user_name, user_token=token)
-    except models.Feed.DoesNotExist:
-        try:
-            feed_model = models.Feed.objects.get(user_name=user_name)
-            feed_model.token = token
-        except models.Feed.DoesNotExist:
-            salt, url = _create_salt_and_url(user_name)
-            feed_model = models.Feed(user_token=token, user_name=user_name, created=now, last_access=now, url=url, salt=salt)
-    
-    feed_model.last_access = now
-    feed_model.save()
-    
-    return feed_model
-
 def get_or_create_user(token, username, userid, email):
     """
     Either get the user model that corresponds to the given user id or create a new user model.

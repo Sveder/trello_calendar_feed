@@ -9,6 +9,8 @@ import theapp.models as models
 
 
 EXCEPTION_STRING = "Exception from raise_exception."
+ORIGINAL_EMAIL = "email"
+NEW_EMAIL = "different email"
 
 def raise_exception(*args, **kargs):
     """
@@ -184,3 +186,62 @@ class TestDeleteFeed(TestCase):
         self.assertFalse(json_ret["deleted"], "Feed was deleted")
         self.assertTrue(EXCEPTION_STRING in json_ret["error"], "Error is wrong.")
         self.assertTrue(feed.is_valid, "Feed was deleted.")
+
+
+class TestAddEmail(TestCase):
+    def setUp(self):
+        self.user = logic.get_or_create_user("token", "user name", "1234", ORIGINAL_EMAIL)
+        self.factory = RequestFactory()
+        
+    def test_add_email(self):
+        """
+        Test: User exists.
+        Expected result: No exceptions are raised
+        """
+        request = self.factory.get('/doesnt/matter')
+        request.session = {"cur_user" : self.user.id}
+        
+        self.assertEqual(self.user.email, ORIGINAL_EMAIL, "The starting email is not as expected.")
+        
+        json_ret = json.loads(ajax.add_email(request, NEW_EMAIL))
+        self.user = models.FeedUser.objects.get(id = self.user.id)
+        
+        self.assertEqual(json_ret["error"], "", "An error was returend")
+        self.assertEqual(self.user.email, NEW_EMAIL, "Email was not changed.")
+        
+    def test_no_user(self):
+        """
+        Test: No user in the session.
+        Expected result: Error is returned.
+        """
+        request = self.factory.get('/doesnt/matter')
+        request.session = {}
+        
+        self.assertEqual(self.user.email, ORIGINAL_EMAIL, "The starting email is not as expected.")
+        
+        json_ret = json.loads(ajax.add_email(request, NEW_EMAIL))
+        self.user = models.FeedUser.objects.get(id = self.user.id)
+        
+        self.assertEqual(json_ret["error"], "You need to be authorized to call this.", "An error wasn't returend")
+        self.assertEqual(self.user.email, ORIGINAL_EMAIL, "Email was changed.")
+    
+    def test_exception(self):
+        """
+        Test: Exception is raied in the main try of the function.
+        Expected result: Error is returned.
+        """
+        request = self.factory.get('/doesnt/matter')
+        request.session = {"cur_user" : self.user.id}
+        
+        original_get_user_from_user_id = ajax._get_user_from_user_id
+        ajax._get_user_from_user_id = raise_exception
+        
+        self.assertEqual(self.user.email, ORIGINAL_EMAIL, "The starting email is not as expected.")
+        
+        json_ret = json.loads(ajax.add_email(request, NEW_EMAIL))
+        
+        self.user = models.FeedUser.objects.get(id = self.user.id)
+        ajax._get_user_from_user_id = original_get_user_from_user_id
+        
+        self.assertTrue(EXCEPTION_STRING in json_ret["error"], "An error wasn't returend")
+        self.assertEqual(self.user.email, ORIGINAL_EMAIL, "Email was changed.")
