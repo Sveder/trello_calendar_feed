@@ -75,18 +75,6 @@ def create_calendar_from_feed(feed):
     return create_calendar_from_cards(card_list, feed)
     
 
-def get_all_board_names(token):
-    """
-    Get a list of all board names of the user whose token is given.
-    """
-    boards = get_all_boards(token)
-    board_names = []
-    for board in boards:
-        board_names.append(board.name)
-    
-    return board_names
-    
-
 def get_all_boards(token):
     client = trello.client.Trello(API_KEY, token)
     boards = client.list_boards()

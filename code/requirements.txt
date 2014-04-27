@@ -8,3 +8,5 @@ django-dajaxice
 mysql-python
 pytz
 icalendar
+django-nose
+coverage
