@@ -43,10 +43,9 @@ class TestGetOrCreateUser(TestCase):
         url = "url"
         trello_member_id = "memberid"
         now = time.time()
-        new_user = models.FeedUser(user_name=username, user_token=token, url=url, trello_member_id=trello_member_id, created=now)
-        
-        import pdb; pdb.set_trace()
-        
+        new_user = models.FeedUser(user_name=username, user_token=token, url=url, trello_member_id=trello_member_id, created=now, last_access=now)
+        new_user.save()
+                
         returned_user = logic.get_or_create_user(None, None, trello_member_id, None)
         
         self.assertEqual(returned_user.user_name, user_name)

@@ -69,5 +69,4 @@ def add_email(request, email):
         
         return simplejson.dumps({"error" : ""})
     except:
-        print traceback.format_exc()
         return simplejson.dumps({"error" : traceback.format_exc()})
