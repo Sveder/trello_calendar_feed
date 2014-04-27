@@ -1,4 +1,5 @@
 import json
+import time
 
 from django.test import TestCase
 
@@ -37,6 +38,20 @@ class TestGetOrCreateUser(TestCase):
         Test: USer model exists.
         Expected result: Model will be returned.
         """
+        username = "name"
+        token = "token"
+        url = "url"
+        trello_member_id = "memberid"
+        now = time.time()
+        new_user = models.FeedUser(user_name=username, user_token=token, url=url, trello_member_id=trello_member_id, created=now)
         
+        import pdb; pdb.set_trace()
+        
+        returned_user = logic.get_or_create_user(None, None, trello_member_id, None)
+        
+        self.assertEqual(returned_user.user_name, user_name)
+        self.assertEqual(returned_user.user_token, token)
+        self.assertEqual(returned_user.url, url)
+        self.assertEqual(returned_user.created, now)
         
     
