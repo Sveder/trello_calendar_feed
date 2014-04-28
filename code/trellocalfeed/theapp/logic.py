@@ -135,11 +135,15 @@ def _create_calendar():
     return cal
 
 def _get_categories_from_labels(card):
-    card_date = card.json_obj
-    labels = card_date["labels"]
+    card_data = card.json_obj
+    labels = card_data["labels"]
     categories = []
     for label in labels:
-        label_name = label["name"] if label["name"] else label["color"]
+        if ("name" in label) and label["name"]:
+            label_name = label["name"]
+        else:
+            label_name = label["color"]
+            
         categories.append(label_name)
         
     return categories
