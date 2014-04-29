@@ -14,7 +14,7 @@ def _get_user_from_request(request):
     """
     cur_user_from_session = request.session["cur_user"]
     
-    if type(cur_user_from_session) is int:
+    if type(cur_user_from_session) in (int, long):
         user_model = models.FeedUser.objects.get(id=cur_user_from_session)
     else:
         request.session["cur_user"] = cur_user_from_session.id
