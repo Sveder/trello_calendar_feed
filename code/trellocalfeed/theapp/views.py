@@ -4,11 +4,22 @@ from django.http import HttpResponse
 import logic
 import models
 
-def _get_user_from_user_id(user_id):
+def _get_user_from_request(request):
     """
-    Return a user model from the user_id.
+    Return a user model from the request. There are basically two options:
+    1. the "cur_user" is an integer, meaning the code is updated and just return
+       the correct model.
+    2. the "cur_user" is a model, which means you need to convert it to a user_id
+       in the session cookie and then return the correct model. 
     """
-    user_model = models.FeedUser.objects.get(id=user_id)
+    cur_user_from_session = request.session["cur_user"]
+    
+    if type(cur_user_from_session) is int:
+        user_model = models.FeedUser.objects.get(id=cur_user_from_session)
+    else:
+        request.session["cur_user"] = cur_user_from_session.id
+        user_model = cur_user_from_session
+        
     return user_model
 
 def redirect_to_sveder(request):
@@ -19,7 +30,7 @@ def faq(request):
 
 def home(request):
     if "cur_user" in request.session:
-        user = _get_user_from_user_id(request.session["cur_user"])
+        user = _get_user_from_request(request)
         return shortcuts.redirect("/user/%s" % user.url)
     
     return shortcuts.render_to_response("index.html")

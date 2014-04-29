@@ -7,7 +7,7 @@ from dajaxice.decorators import dajaxice_register
 
 import logic
 import models
-from views import _get_user_from_user_id
+from views import _get_user_from_request
 
 @dajaxice_register
 def process_cards(request, token, username, userid, email):
@@ -25,7 +25,7 @@ def create_feed(request, is_only_assigned, all_day_meeting, meeting_length, boar
         if "cur_user" not in request.session:
             return simplejson.dumps({'feed_url' : "", "error" : "You need to be authorized to call this."})
         
-        user = _get_user_from_user_id(request.session["cur_user"])
+        user = _get_user_from_request(request)
         feed_model = logic.create_feed(user, is_only_assigned, all_day_meeting, meeting_length, boards)
         return simplejson.dumps({'feed_url' : feed_model.url, 'feed_summary' : feed_model.summary, "feed_id" : feed_model.id})
     except:
@@ -37,7 +37,7 @@ def delete_feed(request, feed_id):
         if "cur_user" not in request.session:
             return simplejson.dumps({'deleted' : False, "error" : "You need to be authorized to call this."})
         
-        user = _get_user_from_user_id(request.session["cur_user"])
+        user = _get_user_from_request(request)
         try:
             feed_model = models.Feed.objects.get(id=feed_id, feed_user=user)
         except models.Feed.DoesNotExist:
@@ -56,7 +56,7 @@ def add_email(request, email):
         if "cur_user" not in request.session:
             return simplejson.dumps({"error" : "You need to be authorized to call this."})
         
-        user = _get_user_from_user_id(request.session["cur_user"])
+        user = _get_user_from_request(request)
         user.email = email
         user.save()
         
