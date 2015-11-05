@@ -1,3 +1,6 @@
+DEPRECATED - Trello added this features. Also check [TrelloPlus](https://chrome.google.com/webstore/detail/plus-for-trello-time-trac/gjjpophepkbhejnglcmkdnncmaanojkf?hl=en) for advanced features.
+============
+
 Trello2iCal - Create a calendar feed from Trello cards
 =============
 
